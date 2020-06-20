@@ -1,11 +1,21 @@
 /* For the Background Image */
 .bg {
     /* The image used */
-    background-image: url('images/background.jpg');
+    background-image: url('images/bg1Image.jpg');
+    
     /* Full height */
     height: 100%;
     /* Center and scale the image nicely */
-    /* background-position: center; */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.bg2 {
+    /* The image used */
+    background-image: url('images/bgImage.jpg');
+    
+    /* Center and scale the image nicely */
+    background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
