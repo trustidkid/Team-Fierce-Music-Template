@@ -87,6 +87,8 @@ $mail->Port = 2525;
             $_SESSION['email'] = $email;
 
             $connect->close();
+            $content = "You have succesfully login.";
+            set_alert("message", $connect);
             header("location: index.php");
                         
         }else{
