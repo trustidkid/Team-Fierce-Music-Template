@@ -3,9 +3,9 @@
     function checkDbConnection()
     {
         $servername = 'us-cdbr-east-05.cleardb.net'; //"localhost";
-        $username = "b079ce3ed99eee";//"developer";
-        $password = "0fafb53e";//"developer";
-        $database = "heroku_aa258ad5d89dc56"; //"cvgenerator";
+        $username = "ba06eb09f32243";//"developer";
+        $password = "b5f12f4d";//"developer";
+        $database = "heroku_7d3cd868bb63234"; //"cvgenerator";
 
         $connect = new mysqli($servername,$username,$password,$database);
         //check connection status

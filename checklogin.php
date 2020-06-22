@@ -3,7 +3,7 @@
 require_once("functions/user.php");
 require_once("functions/connection.php");
 
-
+//print_r($_POST); die();
     /**
  * PHPMAILER SETUP START
  */
@@ -32,12 +32,12 @@ $mail->Port = 2525;
  * Google OAuth starts
  */
 
-        require_once 'vendor/autoload.php';
+     require_once 'vendor/autoload.php';
     
         // init configuration
-        $clientID = '706858900714-ccrmllrucur5rdmi6c7fphs358phasjh.apps.googleusercontent.com';
-        $clientSecret = 'bo6Z1fex5sg2VQneNCCVZdHL';
-        $redirectUri = 'https://dry-brushlands-62217.herokuapp.com/processlogin.php';
+        $clientID = '171511731621-606nleg6pn92pnd0gsucvqi3lfbshta6.apps.googleusercontent.com';
+        $clientSecret = '4Y2IZ31ky3lILodvldH5vwks';
+        $redirectUri = 'http://localhost:8080/Team-Fierce-Music-Template/checklogin.php';
         
         // create Client Request to access Google API
         $client = new Google_Client();
@@ -46,6 +46,7 @@ $mail->Port = 2525;
         $client->setRedirectUri($redirectUri);
         $client->addScope("email");
         $client->addScope("profile");
+        //$client->addScope("imageURL");
         
         // authenticate code from Google OAuth Flow
         if (isset($_GET['code'])) {
@@ -74,10 +75,10 @@ $mail->Port = 2525;
             You have successfully login to Genera8It on ".date('yy-m-d h:m:s')."</p>".
             "<p> If you did not initiate this, please change your password immediately. </p>"."<p>"." Thank you.</p>";
 
-            $mail->setFrom('no-reply@gener8It.com', 'Gener8It.com');
-            $mail->addReplyTo('info@gener8It.com', 'GN8');
+            $mail->setFrom('no-reply@fircemusic.com', 'fircemusic.com');
+            $mail->addReplyTo('info@fircemusic.com', 'GN8');
             $mail->addAddress($email, 'user'); 
-            $mail->addCC('admin@gener8It.com', 'client');
+            $mail->addCC('admin@fircemusic.com', 'client');
             $mail->Subject = $subject;
             $mail->isHTML(true);
             $mail->Body = $message;
@@ -86,7 +87,7 @@ $mail->Port = 2525;
             $_SESSION['email'] = $email;
 
             $connect->close();
-            header("location: create-cv/create-cv.html");
+            header("location: index.php");
                         
         }else{
                 echo "<script type='text/javascript'>
@@ -97,7 +98,7 @@ $mail->Port = 2525;
             }
     
     } else {
-        echo "<a href='".$client->createAuthUrl()."' class='text-center' >Proceed...</a>";
+        echo "<a href='".$client->createAuthUrl()."'>Proceed...</a>";
     }
 
  /**
@@ -106,6 +107,7 @@ $mail->Port = 2525;
 
     if(isset($_POST['login'])){
 
+        
         $email = checkinput($_POST['email']);
         $password = checkinput($_POST['password']);
 
@@ -137,13 +139,12 @@ $mail->Port = 2525;
             $select_query = "select password from users where email ='$email'";
             $exist = $connect->query($select_query);
         
+
             //check user exist
             if($exist->num_rows > 0)
             {
-
                 $row = $exist->fetch_assoc();
                 $passwordfrmDB = $row['password'];
-
                 if(password_verify($password,$passwordfrmDB)){
                     
                     $insert_query = "insert into userlog(email) values('".$email."')";
@@ -152,13 +153,13 @@ $mail->Port = 2525;
                     {
                         $subject = "Successful Login";
                         $message = "Welcome Back!"."<p>"."
-                        You have successfully login to Genera8It on ".date('yy-m-d h:m:s')."</p>".
+                        You have successfully login to Team Fierce Music on ".date('yy-m-d h:m:s')."</p>".
                         "<p> If you did not initiate this, please change your password immediately. </p>"."<p>"." Thank you.</p>";
 
-                        $mail->setFrom('no-reply@gener8It.com', 'Gener8It.com');
-                        $mail->addReplyTo('info@gener8It.com', 'GN8');
+                        $mail->setFrom('no-reply@fircemusic.com', 'FierceMusic.com');
+                        $mail->addReplyTo('info@fircemusic.com', 'GN8');
                         $mail->addAddress($email, 'user'); 
-                        $mail->addCC('admin@gener8It.com', 'client');
+                        $mail->addCC('admin@fircemusic.com', 'client');
                         $mail->Subject = $subject;
                         $mail->isHTML(true);
                         $mail->Body = $message;
@@ -166,20 +167,28 @@ $mail->Port = 2525;
 
                         $_SESSION['email'] = $email;
                         $connect->close();
-                        header("location: create-cv/create-cv.html");
+                       // $content = "You have successfully login.";
+                        //set_alert("error", $connect);
+                        //header("location: index.php");
+                        echo "<script type='text/javascript'>
+                            const message = 'You have successfully login.';
+                            alert(message)
+                            window.location.href = 'index.php';
+                        </script>";
+                        //header("location: index.php");
                        
                     
                     }else{
                         echo "<script type='text/javascript'>
                             const message = 'User log cannot be saved.';
                             alert(message)
-                            window.location.href = 'login.php';
+                            window.location.href = 'index.php';
                         </script>";
                     }
                 }else{
                     $content = "Incorrect username and/or password";
                     set_alert("error", $connect);
-                    header("location: login.php");
+                    header("location: index.php");
                 }
                 
             }else
@@ -194,7 +203,7 @@ $mail->Port = 2525;
                 echo "<script type='text/javascript'>
                         const message = 'Incorrect username and/or password.';
                         alert(message)
-                        window.location.href = 'login.php';
+                        window.location.href = 'index.php';
                     </script>";
             }
      

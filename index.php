@@ -1,5 +1,7 @@
 <?php
   session_start();
+  require_once('functions/alert.php');
+  //require_once('functions/user.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,8 +29,11 @@
 
         <!-- Form Section -->
         <div class="col-lg-6 col-md-6 col-sm-6 justify-content-center pt-5 mt-5 mb-5" style="border: 1px solid white; background-color: white;">
-          <form>
-            <a type="button" target="_self" rel="noopener noreferrer" href="" class="btn btn-outline-primary btn-block">
+          <form method="POST" action="checklogin.php">
+            <div>
+              <?php display_alert(); ?>
+            </div>
+            <a type="button" target="_self" rel="noopener noreferrer" href="checklogin.php" class="btn btn-outline-primary btn-block">
               <div class="SignUpWithGoogleButton--iconContainer--1g7ok">
                 <svg class="SignUpWithGoogleButton--icon--3Iijc ml-lg-3 float-left" viewBox="0 0 512 512" height="30" width="30">
                   <g fill="none" fill-rule="evenodd">
@@ -57,7 +62,7 @@
               <input type="password" name="password" class="form-control" id="formGroupExampleInput2" placeholder="PASSWORD" required>
             </div>
             <br/>
-            <button type="button" name="login" class="btn btn-secondary btn-block">LogIn
+            <button type="submit" name="login" class="btn btn-secondary btn-block">LogIn
             </button>
           </form>
           <br/>
