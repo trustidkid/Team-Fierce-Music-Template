@@ -30,7 +30,8 @@
 
         <!-- Form Section -->
         <div class="col-lg-6 col-md-6 justify-content-center pl-lg-5 pr-lg-5 pt-4" style="border: 1px solid white; background-color: white;">
-          <form mnethod="POST" action="checkuser.php">
+          <form method="POST" action="checkuser.php">
+          <form method="POST" action="checklogin.php">
             <p class="text-center">Register / Sign Up</p>
         
             <div>

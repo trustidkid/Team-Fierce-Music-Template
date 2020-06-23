@@ -71,7 +71,7 @@
             </a>
           </p>
           <p class="text-center"> Don't have an Account? 
-            <a href="SignUp.php" alt="">
+            <a href="SignUp.php">
               <span>Sign-Up
               </span> 
             </a>
