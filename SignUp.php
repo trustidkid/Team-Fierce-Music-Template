@@ -1,3 +1,8 @@
+<?php 
+  session_start();
+  require_once('functions/alert.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -25,15 +30,21 @@
 
         <!-- Form Section -->
         <div class="col-lg-6 col-md-6 justify-content-center pl-lg-5 pr-lg-5 pt-4" style="border: 1px solid white; background-color: white;">
-          <form>
+          <form mnethod="POST" action="checkuser.php">
             <p class="text-center">Register / Sign Up</p>
         
+            <div>
+              <?php display_alert(); ?>
+            </div>
+
             <div class="form-group">
-                <input type="name" name="name" class="form-control" id="formGroupExampleInput" placeholder="Name" required>
+                <input type="name" name="name" value="<?php if(isset($_SESSION['name']))
+               $_SESSION['name']; else '';?>" class="form-control" id="formGroupExampleInput" placeholder="Name" required>
             </div>
             
             <div class="form-group">
-              <input type="email" name="email" class="form-control" id="formGroupExampleInput" placeholder="Email" required>
+              <input type="email" name="email" value="<?php if(isset($_SESSION['email']))
+               $_SESSION['email']; else '';?>" class="form-control" id="formGroupExampleInput" placeholder="Email" required>
             </div>
             
             <div class="form-group">
@@ -45,7 +56,7 @@
             </div>
             <br/>  
             <div class="d-flex justify-content-center">
-                <button type="button" name="login" class="btn btn-secondary ">Register Now
+                <button type="submit" name="register" class="btn btn-secondary ">Register Now
                 </button>
             </div>
             

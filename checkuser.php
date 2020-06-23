@@ -37,7 +37,7 @@ $mail->Port = 2525;
         // init configuration
         $clientID = '171511731621-606nleg6pn92pnd0gsucvqi3lfbshta6.apps.googleusercontent.com';
         $clientSecret = '4Y2IZ31ky3lILodvldH5vwks';
-        $redirectUri =  'https://teamfiercemusic.herokuapp.com/checklogin.php';
+        $redirectUri = 'https://teamfiercemusic.herokuapp.com/checklogin.php';
         
         // create Client Request to access Google API
         $client = new Google_Client();
@@ -67,8 +67,8 @@ $mail->Port = 2525;
         if($save)
         {
             //create an account for the user
-            $insert_query = "insert into users(email, firstname, lastname, password) 
-            values ('$email', '$firstname', '$lastname', '$password_hash')";
+            $insert_query = "insert into users(email, name, password) 
+            values ('$email', '$name')";
 
             $subject = "Successful Login";
             $message = "Welcome Back!"."<p>"."
@@ -107,15 +107,16 @@ $mail->Port = 2525;
   * Google Oauth End
   */
 
-    if(isset($_POST['login'])){
+    if(isset($_POST['register'])){
 
-        
+        echo "got here";
         $email = checkinput($_POST['email']);
         $password = checkinput($_POST['password']);
+        $name = checkinput($_POST['name']);
 
         $splitemail = explode("@",$email);
 
-        if($email == "" || $password == ""){
+        if($email == "" || $password == "" || $name == ""){
 
             $content = "All fields must be filled.";
             set_alert("error", $connect);
@@ -138,25 +139,23 @@ $mail->Port = 2525;
         else
         {
 
-            $select_query = "select password from users where email ='$email'";
+            $select_query = "select * from users where email ='$email'";
             $exist = $connect->query($select_query);
         
-
             //check user exist
-            if($exist->num_rows > 0)
+            if($exist->num_rows < 1)
             {
-                $row = $exist->fetch_assoc();
-                $passwordfrmDB = $row['password'];
-                if(password_verify($password,$passwordfrmDB)){
-                    
-                    $insert_query = "insert into userlog(email) values('".$email."')";
+                $password_hash = password_hash($password);       
+                $insert_query = "insert into users(email, name, password) 
+                values ('$email', '$name', '$password_hash')";
+
                     $save = $connect ->query($insert_query);
                     if($save)
                     {
-                        $subject = "Successful Login";
-                        $message = "Welcome Back!"."<p>"."
-                        You have successfully login to Team Fierce Music on ".date('yy-m-d h:m:s')."</p>".
-                        "<p> If you did not initiate this, please change your password immediately. </p>"."<p>"." Thank you.</p>";
+                        $subject = "New User Created";
+                        $message = "You are Welcome!"."<p>"."
+                        You have successfully create account with Team Fierce Music on ".date('yy-m-d h:m:s')."</p>".
+                        "<p> Below is your credential:. </p>"."<p>"."Username: " .$email. "<br>". "Password: ". $password. "<p>Thank you.</p>";
 
                         $mail->setFrom('no-reply@fircemusic.com', 'FierceMusic.com');
                         $mail->addReplyTo('info@fircemusic.com', 'GN8');
@@ -168,44 +167,41 @@ $mail->Port = 2525;
                         $mail->send();
 
                         $_SESSION['email'] = $email;
+                        $_SESSION['name'] = $name;
                         $connect->close();
-                       // $content = "You have successfully login.";
-                        //set_alert("error", $connect);
-                        //header("location: index.php");
+                        $content = "Your account is ready to be used. ". $email . "   " . $password;
+                        set_alert("error", $connect);
+                        header("location: SignUp.php");
+
                         echo "<script type='text/javascript'>
                             const message = 'You have successfully login.';
                             alert(message)
-                            window.location.href = 'index.php';
+                            window.location.href = 'SignUp.php';
                         </script>";
                         //header("location: index.php");
                        
                     
-                    }else{
-                        echo "<script type='text/javascript'>
-                            const message = 'User log cannot be saved.';
-                            alert(message)
-                            window.location.href = 'index.php';
-                        </script>";
-                    }
-                }else{
-                    $content = "Incorrect username and/or password";
+                }
+                else{
+                    $content = "Unable to save the record. Please contact administrator.";
                     set_alert("error", $connect);
-                    header("location: index.php");
+                    header("location: SignUp.php");
                 }
                 
-            }else
+            }
+            else
             {
                 
                 /* 
                 $content = "Incorrect username and/or password.";
                 set_alert("error", $connect);
-                header("location: login.php");
+                header("location: SignUp.php");
                 //session_destroy();
                 */
                 echo "<script type='text/javascript'>
-                        const message = 'Incorrect username and/or password.';
+                        const message = 'User already created.';
                         alert(message)
-                        window.location.href = 'index.php';
+                        window.location.href = 'SignUp.php';
                     </script>";
             }
      
