@@ -3,7 +3,7 @@
 require_once("functions/user.php");
 require_once("functions/connection.php");
 
-//print_r($_POST); die();
+include "autoloadnon.php";
     /**
  * PHPMAILER SETUP START
  */
@@ -35,9 +35,9 @@ $mail->Port = 2525;
      require_once 'vendor/autoload.php';
     
         // init configuration
-        $clientID = '171511731621-606nleg6pn92pnd0gsucvqi3lfbshta6.apps.googleusercontent.com';
-        $clientSecret = '4Y2IZ31ky3lILodvldH5vwks';
-        $redirectUri =  'https://teamfiercemusic.herokuapp.com/checklogin.php';
+        $clientID =  env('clientID');// '171511731621-606nleg6pn92pnd0gsucvqi3lfbshta6.apps.googleusercontent.com';
+        $clientSecret = env('clientSecret');//'4Y2IZ31ky3lILodvldH5vwks';
+        $redirectUri =  env('redirectUri');//'https://teamfiercemusic.herokuapp.com/checklogin.php';
         
         // create Client Request to access Google API
         $client = new Google_Client();

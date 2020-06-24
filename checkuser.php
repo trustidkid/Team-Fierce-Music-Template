@@ -146,7 +146,7 @@ if(isset($_POST['register']))
                     
                     $content = "Account could not be created. Please contact admin". $connect->error;
                     set_alert("message",$content);
-                    header("location: register.php");
+                    header("location: SignUp.php");
                     $connect->close();
                 }
             }

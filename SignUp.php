@@ -64,7 +64,7 @@
           </form>
           <br/>
           <p class="text-center"> Already have an Account? 
-            <a href="index.html">
+            <a href="index.php">
               <span>Login here
               </span> 
             </a>

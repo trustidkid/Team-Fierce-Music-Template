@@ -1,10 +1,19 @@
 <?php
+
+    include "autoloadnon.php";
     function checkDbConnection()
     {
-        $servername = 'us-cdbr-east-05.cleardb.net';
+       /* $servername = 'us-cdbr-east-05.cleardb.net';
         $username = "ba06eb09f32243";
         $password = "b5f12f4d";
-        $database = "heroku_7d3cd868bb63234";
+        $database = "heroku_7d3cd868bb63234"; 
+        */
+
+        $servername = env('DB_HOST');
+        $username = env('DB_USERNMAE');
+        $password = env('DB_PASSWORD');// "b5f12f4d";
+        $database = env('DB_NAME');//"heroku_7d3cd868bb63234";
+        
 
         $connect = new mysqli($servername,$username,$password,$database);
         //check connection status
